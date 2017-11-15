@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>泰國成功大學校友會</title>
+    <link href="vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+    <link href="app/css/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <header class="bs-header">
+      <div class="container">
+        <h1><span><a href="/#contacts"><img src="https://drive.google.com/uc?id=0B3KwgTLHy8_BamFfanV0X0ZzdDQ" style="width: 60px;height: 60px;"></a>泰國成功大學校友會</span></h1>
+<!--        <p>Simple Backbone.js example application</p>-->
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 main-container">
+        </div>
+      </div>
+    </div>
+
+    <script type="text/template" id="tpl-contacts">
+      <h2 class="page-header text-center">會員通訊錄</h2>
+      <p class="text-center">
+        <a href="#contacts/new" class="btn btn-lg btn-outline">增加會員</a>
+      </p>
+      <ul class="media-list row contacts-container"></ul>
+    </script>
+
+    <script type="text/template" id="tpl-contact">
+      <div class="thumbnail">
+        <img class="media-object" src="<%- getAvatar %>">
+      </div>
+      <div class="media-heading">
+        <h3>
+          <%- fullnamecn %>
+          <small>
+            <a href="#contacts/edit/<%- id %>"><span class="glyphicon glyphicon-pencil"></span></a>
+            <!-- <a href="#contacts/delete/<%- id %>" class="delete-contract"> -->
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </small>
+        </h3>
+        <dl>
+            <%- fullnameth %><br/>
+            <%- fullnameen %><br/>
+            <span style="color: blue; font-size: 120%;font-weight: bold;"><%- graduatedInfo %></span>
+        </dl>
+      </div>
+      <div class="media-body">
+        <dl>
+          <dt>Address:</dt>
+          <dd style="font-size: 70%;"><%- address %></dd>
+          <dt>Phone Number:</dt>
+          <dd><%- telephone %> <%- mobile %></dd>
+          <dt>Email:</dt>
+          <dd><%- email %></dd>
+        </dl>
+      </div>
+      <hr>
+    </script>
+
+    <script type="text/template" id="tpl-new-contact">
+      <h2 class="page-header text-center"><%= isNew ? '增新' : '更改' %>會員</h2>
+      <form role="form" class="form-horizontal contract-form">
+        <input type="text" class="contact-id-input" style="display: none" value="<%- id %>">
+        <div class="form-group required">
+          <label class="col-sm-4 control-label">姓名:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-fullnamecn-input" required="required" placeholder="姓名" value="<%- fullnamecn %>">
+          </div>
+          <div class="col-sm-3">
+            <img class="contact-avatar-image" style="width: 90px; height: 90px;" src="<%- getAvatar %>">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-default btn-file">
+                        <span class="glyphicon glyphicon-upload"></span>
+                        <input type="file" id="file" name="file" readonly>
+                    </span>
+                </span>
+                <input type="text" class="form-control" placeholder="image size <= 600KB" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">ชื่อ/สกุล:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-nameth-input" placeholder="ชื่อ" value="<%- nameth %>">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-surnameth-input" placeholder="สกุล" value="<%- surnameth %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Name/Surname:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-nameen-input" placeholder="Name" value="<%- nameen %>">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-surnameen-input" placeholder="Surname" value="<%- surnameen %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Department/Graduate-Year:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-department-input" placeholder="系名" value="<%- department %>">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-graduatedyear-input" placeholder="級別" value="<%- graduatedyear %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Address:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control contact-address-input" placeholder="address" value="<%- address %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Telephone Mobile:</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-telephone-input" placeholder="telephone" value="<%- telephone %>">
+          </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control contact-mobile-input" placeholder="mobile" value="<%- mobile %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label">Email address:</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control contact-email-input" placeholder="email" value="<%- email %>">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-3">
+            <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
+          </div>
+          <div class="col-sm-3">
+            <a href="#contacts" class="btn btn-outline btn-lg btn-block">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </script>
+
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="vendor/underscore/underscore.1.8.3-min.js"></script>
+    <script src="vendor/backbone/backbone.1.3.3-min.js"></script>
+    <script src="vendor/mutators/backbone.mutators.min.js"></script>
+
+    <script src="app/js/app.js"></script>
+    <script src="app/js/models/contact.js"></script>
+    <script src="app/js/models/dataService.js"></script>
+    <script src="app/js/collections/contacts.js"></script>
+    <script src="app/js/views/contact.js"></script>
+    <script src="app/js/views/contacts.js"></script>
+    <script src="app/js/views/contactForm.js"></script>
+    <script src="app/js/router.js"></script>
+
+    <script>
+        $(function() {
+            DATASERVICES.getAllMembers()
+                .done(function(response, textStatus, jqXHR) {
+                    ContactManager.start( { contacts: response.members });
+            })
+        });
+    </script>
+  </body>
+</html>
